@@ -5,9 +5,9 @@ import customTheme from '../theme';
 
 const { Header, Content, Footer } = Layout;
 
-const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
+const menuItems: MenuProps['items'] = ['Speaking clubs', 'Coaches', 'Profile'].map((key) => ({
   key,
-  label: `nav ${key}`,
+  label: key,
 }));
 
 const App: React.FC = () => {
@@ -30,7 +30,7 @@ const App: React.FC = () => {
             theme="dark"
             mode="horizontal"
             defaultSelectedKeys={['2']}
-            items={items1}
+            items={menuItems}
             style={{ flex: 1, minWidth: 0, backgroundColor: customTheme.token.colorPrimary }}
           />
         </Header>
@@ -40,9 +40,9 @@ const App: React.FC = () => {
           flexDirection: 'column',
         }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
+            <Breadcrumb.Item>Speaking Clubs</Breadcrumb.Item>
+            <Breadcrumb.Item>Warsaw</Breadcrumb.Item>
+            <Breadcrumb.Item>Spanish</Breadcrumb.Item>
           </Breadcrumb>
           <Layout
             style={{
@@ -53,11 +53,11 @@ const App: React.FC = () => {
               backgroundColor: customTheme.token.colorTextBase
             }}
           >
-            <Content style={{ padding: '0 24px', minHeight: 280 }}>Content</Content>
+            <Content style={{ padding: '0 24px', minHeight: 280 }}>No clubs found. Give it a try next time</Content>
           </Layout>
         </Content>
         <Footer style={{ textAlign: 'center', backgroundColor: customTheme.token.colorSuccess }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
+          Speaking Club ©{new Date().getFullYear()} - Languages for everyone
         </Footer>
       </Layout>
     </ConfigProvider>
