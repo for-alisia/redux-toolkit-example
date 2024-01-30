@@ -8,14 +8,14 @@ import {
   Param,
 } from '@nestjs/common';
 import { MeetingsService } from './meetings.service';
-import { Meeting } from './meeting.model';
+import { Meeting, MeetingDTO } from './meeting.model';
 
 @Controller('meetings')
 export class MeetingsController {
   constructor(private readonly meetingsService: MeetingsService) {}
 
   @Get()
-  async findAll(): Promise<Meeting[]> {
+  async findAll(): Promise<MeetingDTO[]> {
     return this.meetingsService.findAll();
   }
 

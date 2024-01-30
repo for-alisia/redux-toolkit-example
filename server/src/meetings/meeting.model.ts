@@ -5,6 +5,13 @@ export class Meeting {
   date: Date;
   availableSeats: number;
   status: string;
-  level: string;
   attendies: string[];
+  city: string;
+  topic: string;
+  level: string;
 }
+
+export type MeetingDTO = Pick<
+  Meeting,
+  'id' | 'title' | 'topic' | 'description' | 'availableSeats' | 'city' | 'level'
+> & { date: string; time: string };
