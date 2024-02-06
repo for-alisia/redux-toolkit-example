@@ -4,16 +4,6 @@ import { Meeting, MeetingDTO } from './meeting.model';
 
 @Injectable()
 export class MeetingsService {
-  static DATE_FORMATTER = new Intl.DateTimeFormat('en-US', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-  static TIME_FORMATTER = new Intl.DateTimeFormat('en-US', {
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: false,
-  });
   constructor(private readonly neDbService: NeDbService) {}
 
   async findAll(): Promise<MeetingDTO[]> {
@@ -40,11 +30,10 @@ export class MeetingsService {
   }
 
   private prepareMeetingDTO(meeting: Meeting): MeetingDTO {
-    const { id, title, description, level, city, topic, availableSeats, date } =
+    const { id, title, description, level, city, availableSeats, date } =
       meeting;
 
-    const formattedDate = MeetingsService.DATE_FORMATTER.format(date);
-    const formattedTime = MeetingsService.TIME_FORMATTER.format(date);
+    const formattedDate = date.toLocaleDateString();
 
     return {
       id,
@@ -52,10 +41,8 @@ export class MeetingsService {
       description,
       level,
       city,
-      topic,
       availableSeats,
       date: formattedDate,
-      time: formattedTime,
     };
   }
 }

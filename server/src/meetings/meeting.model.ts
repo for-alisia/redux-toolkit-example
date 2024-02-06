@@ -7,11 +7,10 @@ export class Meeting {
   status: string;
   attendies: string[];
   city: string;
-  topic: string;
   level: string;
 }
 
 export type MeetingDTO = Pick<
   Meeting,
-  'id' | 'title' | 'topic' | 'description' | 'availableSeats' | 'city' | 'level'
-> & { date: string; time: string };
+  'id' | 'title' | 'description' | 'availableSeats' | 'city' | 'level'
+> & { date: string };
