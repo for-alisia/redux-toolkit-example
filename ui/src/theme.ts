@@ -4,7 +4,7 @@ const customTheme = {
     colorSuccess: '#264E36',
     colorTextBase: '#FFF2EC',
     colorWarning: '#BA3242',
-    colorLink: '#B89B72',
+    colorLink: '#d4ae7a',
     fontFamily: 'Source Sans 3',
     fontSize: 16,
   },

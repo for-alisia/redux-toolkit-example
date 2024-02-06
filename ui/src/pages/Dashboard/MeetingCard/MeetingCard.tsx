@@ -1,48 +1,24 @@
-import { Card, Badge } from 'antd';
+import { Card, Badge, Button } from 'antd';
 import {
   CalendarOutlined,
   FieldTimeOutlined,
   PushpinOutlined,
   DashboardOutlined,
-  FireTwoTone,
-  HeartTwoTone,
-  InfoCircleTwoTone,
+  EditOutlined,
+  InfoCircleOutlined,
 } from '@ant-design/icons';
 import customTheme from '../../../theme';
+import { Meeting } from '../../../models/Meeting.model';
 
 const { Meta } = Card;
 
-type MeetingCardProps = {
-  title: string;
-  description: string;
-  date: string;
-  time: string;
-  availableSeats: number;
-  city: string;
-  topic: string;
-  level: string;
-}
-
-const getLevelColor = (level: string) => {
-  if (level === 'Beginner') {
-    return customTheme.token.colorSuccess;
-  }
-
-  if (level === 'Advanced') {
-    return customTheme.token.colorLink;
-  }
-
-  return customTheme.token.colorWarning
-}
-
-const MeetingCard: React.FC<MeetingCardProps> = ({
+const MeetingCard: React.FC<Meeting> = ({
   title,
   description,
   date,
   time,
   availableSeats,
   city,
-  topic,
   level
 }) => ( 
   <Badge.Ribbon
@@ -51,17 +27,17 @@ const MeetingCard: React.FC<MeetingCardProps> = ({
         style={{ transform: 'translate 10px 10px'}}
       >
     <Card
-      style={{ width: 400 }}
+      style={{ width: 350, backgroundColor: customTheme.token.colorPrimary }}
+      hoverable
       cover={
         <img
           alt=""
-          src={`https://source.unsplash.com/random/400x200?${topic}`}
+          src={`https://source.unsplash.com/random/400x200?${title}`}
         />
       }
       actions={[
-        <FireTwoTone key="join" twoToneColor={customTheme.token.colorLink} />,
-        <HeartTwoTone key="like" twoToneColor={customTheme.token.colorWarning} />,
-        <InfoCircleTwoTone key="info" twoToneColor={customTheme.token.colorPrimary} />,
+        <Button type="link" size="small" icon={<EditOutlined />} ghost>Book</Button>,
+        <Button type="link" size="small" icon={<InfoCircleOutlined />} ghost>Details</Button>,
       ]}
     >
       <p>
@@ -78,11 +54,21 @@ const MeetingCard: React.FC<MeetingCardProps> = ({
           <p style={{ fontSize: customTheme.token.fontSize }}>
             <PushpinOutlined style={{ color: customTheme.token.colorLink }} />
             <span style={{ margin: '0 1rem 0 0.5rem' }}>{city}</span>
-            <DashboardOutlined style={{ color: getLevelColor(level) }} />
+            <DashboardOutlined style={{ color: customTheme.token.colorWarning }} />
             <span style={{ marginLeft: '0.5rem' }}>{level}</span>
           </p>
         )}
-          description={description}
+        description={(
+          <p style={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            maxHeight: '3em',
+            minHeight: '3em',
+            WebkitLineClamp: 2,
+            marginBlock: '0.5rem',
+          }}>{description}</p>
+        )}
         />
       </Card>
     </Badge.Ribbon>
