@@ -24,6 +24,11 @@ export class MeetingsController {
     return this.meetingsService.findOne(parseInt(id, 10));
   }
 
+  @Put('/seats/:id')
+  async updateAvailableSeats(@Param('id') id: string) {
+    return this.meetingsService.updateAvailableSeats(parseInt(id, 10));
+  }
+
   @Post()
   async create(@Body() meeting: Meeting): Promise<Meeting> {
     return this.meetingsService.create(meeting);

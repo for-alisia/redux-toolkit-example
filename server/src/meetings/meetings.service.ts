@@ -29,6 +29,28 @@ export class MeetingsService {
     await this.neDbService.getDb().remove({ id }, { multi: false });
   }
 
+  async updateAvailableSeats(id: number): Promise<MeetingDTO> {
+    const meeting: Meeting = await this.neDbService
+      .getDb()
+      .findOne<Meeting>({ id });
+
+    if (!meeting) {
+      return null;
+    }
+
+    meeting.availableSeats -= 1;
+
+    const numAffected = await this.neDbService
+      .getDb()
+      .update({ id }, { $set: meeting }, {});
+
+    if (numAffected === 0) {
+      return null;
+    }
+
+    return this.prepareMeetingDTO(meeting);
+  }
+
   private prepareMeetingDTO(meeting: Meeting): MeetingDTO {
     const { id, title, description, level, city, availableSeats, date } =
       meeting;

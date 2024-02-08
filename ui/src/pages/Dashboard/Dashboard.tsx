@@ -1,6 +1,6 @@
 import { Layout, theme } from 'antd';
 import customTheme from '../../theme';
-import MeetingList from './MeetingList';
+import MeetingsContent from './MeetingsContent';
 
 const { Content } = Layout;
 
@@ -26,7 +26,7 @@ const Dashboard: React.FC = () => {
         }}
       >
         <Content style={{ padding: '0 24px', minHeight: 280 }}>
-          <MeetingList />
+          <MeetingsContent />
         </Content>
       </Layout>
     </Content>

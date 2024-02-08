@@ -12,14 +12,19 @@ import { Meeting } from '../../../models/Meeting.model';
 
 const { Meta } = Card;
 
-const MeetingCard: React.FC<Meeting> = ({
+type MeetingCardProps = Meeting & {
+  onBookSeat: () => void;
+}
+
+const MeetingCard: React.FC<MeetingCardProps> = ({
   title,
   description,
   date,
   time,
   availableSeats,
   city,
-  level
+  level,
+  onBookSeat,
 }) => ( 
   <Badge.Ribbon
         text={`${availableSeats} seats are available`}
@@ -33,10 +38,11 @@ const MeetingCard: React.FC<Meeting> = ({
         <img
           alt=""
           src={`https://source.unsplash.com/random/400x200?${title}`}
+          style={{ minHeight: 200 }}
         />
       }
       actions={[
-        <Button type="link" size="small" icon={<EditOutlined />} ghost>Book</Button>,
+        <Button type="link" size="small" icon={<EditOutlined />} ghost onClick={onBookSeat}>Book</Button>,
         <Button type="link" size="small" icon={<InfoCircleOutlined />} ghost>Details</Button>,
       ]}
     >
