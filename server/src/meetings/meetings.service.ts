@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { NeDbService } from '../db/nedb.service';
 import { Meeting, MeetingDTO } from './meeting.model';
 
@@ -35,7 +39,11 @@ export class MeetingsService {
       .findOne<Meeting>({ id });
 
     if (!meeting) {
-      return null;
+      throw new NotFoundException('Meeting not found');
+    }
+
+    if (meeting.availableSeats === 0) {
+      throw new BadRequestException('No available seats');
     }
 
     meeting.availableSeats -= 1;

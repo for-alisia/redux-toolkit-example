@@ -17,7 +17,7 @@ const MeetingsContent: React.FC<MeetingsContentProps> = ({
       <Button type="primary" onClick={onUpdate}>Update meetings</Button>
       {isFetching && <Spin style={{ marginLeft: 16 }} />}
     </Flex>
-    {!isSuccess && (
+    {!isSuccess && !isFetching && (
       <Alert
         type="error"
         message="Error happened on meetings update"
