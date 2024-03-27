@@ -12,14 +12,23 @@ import { Meeting } from '../../../models/Meeting.model';
 
 const { Meta } = Card;
 
-const MeetingCard: React.FC<Meeting> = ({
+type MeetingCardProps = Meeting & {
+  onBookSeat: () => void;
+  isBookActionDisabled: boolean;
+  isUpdatingMeeting: boolean;
+}
+
+const MeetingCard: React.FC<MeetingCardProps> = ({
   title,
   description,
   date,
   time,
   availableSeats,
   city,
-  level
+  level,
+  onBookSeat,
+  isBookActionDisabled,
+  isUpdatingMeeting,
 }) => ( 
   <Badge.Ribbon
         text={`${availableSeats} seats are available`}
@@ -33,11 +42,19 @@ const MeetingCard: React.FC<Meeting> = ({
         <img
           alt=""
           src={`https://source.unsplash.com/random/400x200?${title}`}
+          style={{ minHeight: 200 }}
         />
       }
       actions={[
-        <Button type="link" size="small" icon={<EditOutlined />} ghost>Book</Button>,
-        <Button type="link" size="small" icon={<InfoCircleOutlined />} ghost>Details</Button>,
+        <Button
+          type="link"
+          size="small"
+          disabled={isBookActionDisabled}
+          icon={<EditOutlined />}
+          onClick={onBookSeat}
+          loading={isUpdatingMeeting}
+        >Book</Button>,
+        <Button type="link" size="small" icon={<InfoCircleOutlined />}>Details</Button>,
       ]}
     >
       <p>
@@ -53,9 +70,9 @@ const MeetingCard: React.FC<Meeting> = ({
         title={(
           <p style={{ fontSize: customTheme.token.fontSize }}>
             <PushpinOutlined style={{ color: customTheme.token.colorLink }} />
-            <span style={{ margin: '0 1rem 0 0.5rem' }}>{city}</span>
+            <span style={{ margin: '0 1rem 0 0.5rem', color: customTheme.token.colorTextBase }}>{city}</span>
             <DashboardOutlined style={{ color: customTheme.token.colorWarning }} />
-            <span style={{ marginLeft: '0.5rem' }}>{level}</span>
+            <span style={{ marginLeft: '0.5rem', color: customTheme.token.colorTextBase }}>{level}</span>
           </p>
         )}
         description={(

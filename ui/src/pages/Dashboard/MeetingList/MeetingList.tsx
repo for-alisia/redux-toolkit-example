@@ -10,7 +10,7 @@ const MeetingList: React.FC<MeetingListProps> = ({ meetings }) => (
   <ul>
     <Flex wrap="wrap" gap="middle" justify="center">
       {meetings.map((meeting) => (
-        <MeetingCard {...meeting} key={meeting.id} />
+        <MeetingCard meeting={meeting} key={meeting.id} />
       ))}
     </Flex>
   </ul>

@@ -1,6 +1,7 @@
 import { Layout, theme } from 'antd';
 import customTheme from '../../theme';
-import MeetingList from './MeetingList';
+import MeetingsContent from './MeetingsContent';
+import Filters from './Filters';
 
 const { Content } = Layout;
 
@@ -15,9 +16,14 @@ const Dashboard: React.FC = () => {
       display: 'flex',
       flexDirection: 'column',
     }}>
+      <Layout style={{
+        marginBlock: '2rem',
+        backgroundColor: customTheme.token.colorSuccess,
+      }}>
+        <Filters />
+      </Layout>
       <Layout
         style={{
-          margin: '2.5rem 0',
           padding: '24px 0',
           background: colorBgContainer,
           borderRadius: borderRadiusLG,
@@ -26,7 +32,7 @@ const Dashboard: React.FC = () => {
         }}
       >
         <Content style={{ padding: '0 24px', minHeight: 280 }}>
-          <MeetingList />
+          <MeetingsContent />
         </Content>
       </Layout>
     </Content>
