@@ -1,7 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { Meeting, MeetingDTO } from '../../models/Meeting.model';
+import { useMemo } from 'react';
+import type { Meeting, MeetingDTO, MetingDetailed } from '../../models/Meeting.model';
 import formatter from '../../services/Formatter';
 import { ApiMethods } from '../../services/ApiMethods';
+import { useGetUsersByIdsQuery } from './users.api';
 
 export const meetingApi = createApi({
   reducerPath: 'meetingApi',
@@ -28,10 +30,50 @@ export const meetingApi = createApi({
         }
       },
       transformResponse: (meeting: MeetingDTO) => ({ ...meeting, ...formatter.parseDate(meeting.date) }),
-      // Shows that getAllMeetings should be refetched
-      invalidatesTags: [{ type: 'Meetings', id: 'LIST' }],
+      // Shows that getAllMeetings and§ getMeetingById should be refetched
+      invalidatesTags: (_, __, id) => [{ type: 'Meetings', id: 'LIST' }, { type: 'Meetings', id }],
+    }),
+    getMeetingById: builder.query<MetingDetailed, number>({
+      query: (id) => `/meetings/${id}`,
+      transformResponse: ({ date, ...other }: MetingDetailed) => ({ ...other, ...formatter.parseDate(date)}),
+      providesTags: (_, __, id) => [{ type: 'Meetings', id }],
     })
   })
 });
 
-export const { useGetAllMeetingsQuery, useBookSeatMutation } = meetingApi;
+export const {
+  useGetAllMeetingsQuery,
+  useBookSeatMutation,
+  useGetMeetingByIdQuery,
+} = meetingApi;
+
+export const useMeetingDetails = (meetingId: number | undefined, skip: boolean) => {
+  const { data: meeting, isFetching: isFetchingMeeting } = useGetMeetingByIdQuery(meetingId || 0, {
+    skip,
+  });
+
+  const userIds = meeting?.attendies;
+  const { data: users, isFetching: isFetchngUsers } = useGetUsersByIdsQuery(userIds || [], {
+    skip: skip || !userIds,
+  });
+
+  const enrichedMeeting: MetingDetailed | null = useMemo(() => {
+    if (!meeting) {
+      return null;
+    }
+
+    return {
+      ...meeting,
+      attendies: userIds?.map((id) => {
+        const user = users?.find((user) => user.id === id);
+
+        return user ? `${user.firstName} ${user.lastName}` : 'Unknown';
+      }) || [],
+    }
+  }, [meeting, users, userIds]);
+
+  return {
+    isLoading: isFetchingMeeting || isFetchngUsers,
+    meeting: enrichedMeeting,
+  }
+};

@@ -1,18 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import Datastore from 'nedb-promises';
 import { Meeting } from 'src/meetings/meeting.model';
-import { initializeDatabase } from './data-init';
+import { User } from 'src/users/user.model';
+import { Comment } from 'src/comments/comment.model';
+import {
+  initializeDatabase,
+  initialComments,
+  initialMeetings,
+  initialUsers,
+} from './data-init';
 
 @Injectable()
 export class NeDbService {
-  private db: Datastore<Meeting>;
+  private meetings: Datastore<Meeting>;
+  private users: Datastore<User>;
+  private comments: Datastore<Comment>;
 
   constructor() {
-    this.db = Datastore.create({ inMemoryOnly: true });
-    initializeDatabase(this.db);
+    this.meetings = Datastore.create({ inMemoryOnly: true });
+    this.comments = Datastore.create({ inMemoryOnly: true });
+    this.users = Datastore.create({ inMemoryOnly: true });
+    initializeDatabase(this.meetings, initialMeetings);
+    initializeDatabase(this.comments, initialComments);
+    initializeDatabase(this.users, initialUsers);
   }
 
-  getDb(): Datastore<Meeting> {
-    return this.db;
+  getMeetingsDb(): Datastore<Meeting> {
+    return this.meetings;
+  }
+
+  getCommentsDb(): Datastore<Comment> {
+    return this.comments;
+  }
+
+  getUsersDb(): Datastore<User> {
+    return this.users;
   }
 }

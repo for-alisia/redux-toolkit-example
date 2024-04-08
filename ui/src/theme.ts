@@ -1,4 +1,4 @@
-const colors = {
+export const colors = {
   basePrimary: '#282D3C',
   accentPrimary: '#264E36',
   lightPrimary: '#FFF2EC',
@@ -23,6 +23,17 @@ const customTheme = {
       optionSelectedBg: colors.basePrimary,
       optionSelectedColor: colors.lightPrimary,
       optionActiveBg: colors.accentPrimary,
+    },
+    Modal: {
+      contentBg: colors.accentPrimary,
+      headerBg: colors.accentPrimary,
+      titleColor: colors.linkPrimary,
+    },
+    Card: {
+      actionsBg: colors.basePrimary,
+    },
+    Input: {
+      activeBg: colors.lightPrimary,
     }
   }
 };

@@ -1,31 +1,24 @@
 GET http://localhost:3001/meetings
 
-POST http://localhost:3001/meetings HTTP/1.1
+GET http://localhost:3001/meetings/8
+
+GET http://localhost:3001/users
+
+POST http://localhost:3001/users/byId HTTP/1.1
 content-type: application/json
 
 {
-  "id": 1,
-  "title": "test",
-  "description": "test",
-  "date": "10.01.2022",
-  "availableSeats": 100,
-  "status": "Live",
-  "level": "Beginner"
+  "ids": ["u1", "u2"]
 }
 
-GET http://localhost:3001/meetings/1
+GET http://localhost:3001/comments/12
 
-PUT http://localhost:3001/meetings/1 HTTP/1.1
+POST http://localhost:3001/comments HTTP/1.1
 content-type: application/json
 
 {
-  "id": 1,
-  "title": "test updated",
-  "description": "test",
-  "date": "10.01.2022",
-  "availableSeats": 101,
-  "status": "Live",
-  "level": "Beginner"
+  "meetingId": 12,
+  "text": "test api comment",
+  "authorId": "u3",
+  "createdDate": "2024-02-18T08:00:00.000Z"
 }
-
-DELETE http://localhost:3001/meetings/1

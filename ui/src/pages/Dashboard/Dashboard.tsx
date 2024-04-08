@@ -2,6 +2,7 @@ import { Layout, theme } from 'antd';
 import customTheme from '../../theme';
 import MeetingsContent from './MeetingsContent';
 import Filters from './Filters';
+import MeetingDetailsModal from './MeetingDetailsModal';
 
 const { Content } = Layout;
 
@@ -34,6 +35,7 @@ const Dashboard: React.FC = () => {
         <Content style={{ padding: '0 24px', minHeight: 280 }}>
           <MeetingsContent />
         </Content>
+        <MeetingDetailsModal />
       </Layout>
     </Content>
   );
