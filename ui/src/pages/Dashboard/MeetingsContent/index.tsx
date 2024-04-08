@@ -32,7 +32,7 @@ const MeetingsContentWrapper = () => {
       data: filterData(data || [], showUnavailableMeetings, selectedCities),
       ...other
     }),
-    pollingInterval: 5000, // polling happens each 5 sec
+    // pollingInterval: 5000, // polling happens each 5 sec
     skipPollingIfUnfocused: true, // polling is be skipped if tab is not in focus (available in last version)
     // refetchOnFocus: true, // also quite usefull - not too often, but refetching
   });

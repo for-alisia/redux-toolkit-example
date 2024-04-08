@@ -1,7 +1,9 @@
 import Datastore from 'nedb-promises';
 import { Meeting } from 'src/meetings/meeting.model';
+import { User } from 'src/users/user.model';
+import { Comment } from 'src/comments/comment.model';
 
-const initialMeetings: Meeting[] = [
+export const initialMeetings: Meeting[] = [
   {
     id: 6,
     title: 'Public Speaking Mastery',
@@ -10,7 +12,7 @@ const initialMeetings: Meeting[] = [
     availableSeats: 18,
     status: 'Active',
     level: 'Intermediate',
-    attendies: ['Grace', 'Mark', 'Olivia'],
+    attendies: ['u1', 'u2', 'u3'],
     city: 'Los Angeles',
   },
   {
@@ -21,7 +23,7 @@ const initialMeetings: Meeting[] = [
     availableSeats: 15,
     status: 'Active',
     level: 'All Levels',
-    attendies: ['Emma', 'Ryan', 'Sophia'],
+    attendies: ['u4', 'u5', 'u6'],
     city: 'Sydney',
   },
   {
@@ -32,7 +34,7 @@ const initialMeetings: Meeting[] = [
     availableSeats: 20,
     status: 'Active',
     level: 'Advanced',
-    attendies: ['Noah', 'Ava', 'William'],
+    attendies: ['u7', 'u8', 'u9'],
     city: 'Toronto',
   },
   {
@@ -43,7 +45,7 @@ const initialMeetings: Meeting[] = [
     availableSeats: 25,
     status: 'Active',
     level: 'All Levels',
-    attendies: ['Lily', 'Jack', 'Lucas'],
+    attendies: ['u7', 'u3', 'u9'],
     city: 'Singapore',
   },
   {
@@ -55,7 +57,7 @@ const initialMeetings: Meeting[] = [
     availableSeats: 15,
     status: 'Active',
     level: 'All Levels',
-    attendies: ['Sophie', 'Ethan', 'Mia'],
+    attendies: ['u1', 'u8', 'u6'],
     city: 'London',
   },
   {
@@ -66,7 +68,7 @@ const initialMeetings: Meeting[] = [
     availableSeats: 30,
     status: 'Active',
     level: 'All Levels',
-    attendies: ['Logan', 'Chloe', 'Jackson'],
+    attendies: ['u4', 'u6', 'u3'],
     city: 'New York',
   },
   {
@@ -77,7 +79,7 @@ const initialMeetings: Meeting[] = [
     availableSeats: 20,
     status: 'Active',
     level: 'Beginner',
-    attendies: ['Harper', 'Carter', 'Zoe'],
+    attendies: ['u2', 'u7', 'u8'],
     city: 'Melbourne',
   },
   {
@@ -88,7 +90,7 @@ const initialMeetings: Meeting[] = [
     availableSeats: 25,
     status: 'Active',
     level: 'Intermediate',
-    attendies: ['Abigail', 'Elijah', 'Natalie'],
+    attendies: ['u5', 'u4', 'u9'],
     city: 'San Francisco',
   },
   {
@@ -99,7 +101,7 @@ const initialMeetings: Meeting[] = [
     availableSeats: 15,
     status: 'Active',
     level: 'All Levels',
-    attendies: ['Isaac', 'Aria', 'Gabriel'],
+    attendies: ['u1', 'u3', 'u6'],
     city: 'Tokyo',
   },
   {
@@ -110,13 +112,220 @@ const initialMeetings: Meeting[] = [
     availableSeats: 20,
     status: 'Active',
     level: 'All Levels',
-    attendies: ['Amelia', 'Ezra', 'Ava'],
+    attendies: ['u7', 'u2', 'u8'],
     city: 'Berlin',
   },
 ];
 
-const initializeDatabase = async (db: Datastore<Meeting>): Promise<void> => {
-  await db.insert(initialMeetings);
+export const initialUsers: User[] = [
+  {
+    id: 'u1',
+    firstName: 'Anna',
+    lastName: 'Doe',
+    gender: 'female',
+  },
+  {
+    id: 'u2',
+    firstName: 'John',
+    lastName: 'Smith',
+    gender: 'male',
+  },
+  {
+    id: 'u3',
+    firstName: 'Emily',
+    lastName: 'Johnson',
+    gender: 'female',
+  },
+  {
+    id: 'u4',
+    firstName: 'Michael',
+    lastName: 'Williams',
+    gender: 'male',
+  },
+  {
+    id: 'u5',
+    firstName: 'Sophia',
+    lastName: 'Brown',
+    gender: 'female',
+  },
+  {
+    id: 'u6',
+    firstName: 'William',
+    lastName: 'Jones',
+    gender: 'male',
+  },
+  {
+    id: 'u7',
+    firstName: 'Emma',
+    lastName: 'Davis',
+    gender: 'female',
+  },
+  {
+    id: 'u8',
+    firstName: 'James',
+    lastName: 'Miller',
+    gender: 'male',
+  },
+  {
+    id: 'u9',
+    firstName: 'Olivia',
+    lastName: 'Wilson',
+    gender: 'female',
+  },
+];
+
+export const initialComments: Comment[] = [
+  {
+    meetingId: 6,
+    text: 'Comment 1 for meeting 6',
+    authorId: 'u1',
+    createdDate: new Date('February 1, 2024 08:00:00'),
+  },
+  {
+    meetingId: 6,
+    text: 'Comment 2 for meeting 6',
+    authorId: 'u3',
+    createdDate: new Date('February 2, 2024 10:30:00'),
+  },
+  {
+    meetingId: 7,
+    text: 'Comment 1 for meeting 7',
+    authorId: 'u2',
+    createdDate: new Date('February 3, 2024 12:45:00'),
+  },
+  {
+    meetingId: 7,
+    text: 'Comment 2 for meeting 7',
+    authorId: 'u5',
+    createdDate: new Date('February 4, 2024 15:20:00'),
+  },
+  {
+    meetingId: 7,
+    text: 'Comment 3 for meeting 7',
+    authorId: 'u9',
+    createdDate: new Date('February 5, 2024 09:10:00'),
+  },
+  {
+    meetingId: 8,
+    text: 'Comment 1 for meeting 8',
+    authorId: 'u4',
+    createdDate: new Date('February 6, 2024 14:00:00'),
+  },
+  {
+    meetingId: 8,
+    text: 'Comment 2 for meeting 8',
+    authorId: 'u7',
+    createdDate: new Date('February 7, 2024 16:30:00'),
+  },
+  {
+    meetingId: 8,
+    text: 'Comment 3 for meeting 8',
+    authorId: 'u8',
+    createdDate: new Date('February 8, 2024 09:45:00'),
+  },
+  {
+    meetingId: 9,
+    text: 'Comment 1 for meeting 9',
+    authorId: 'u6',
+    createdDate: new Date('February 9, 2024 11:20:00'),
+  },
+  {
+    meetingId: 9,
+    text: 'Comment 2 for meeting 9',
+    authorId: 'u2',
+    createdDate: new Date('February 10, 2024 13:00:00'),
+  },
+  {
+    meetingId: 10,
+    text: 'Comment 1 for meeting 10',
+    authorId: 'u3',
+    createdDate: new Date('February 11, 2024 10:15:00'),
+  },
+  {
+    meetingId: 10,
+    text: 'Comment 2 for meeting 10',
+    authorId: 'u5',
+    createdDate: new Date('February 12, 2024 14:45:00'),
+  },
+  {
+    meetingId: 11,
+    text: 'Comment 1 for meeting 11',
+    authorId: 'u4',
+    createdDate: new Date('February 13, 2024 16:00:00'),
+  },
+  {
+    meetingId: 11,
+    text: 'Comment 2 for meeting 11',
+    authorId: 'u7',
+    createdDate: new Date('February 14, 2024 10:30:00'),
+  },
+  {
+    meetingId: 11,
+    text: 'Comment 3 for meeting 11',
+    authorId: 'u9',
+    createdDate: new Date('February 15, 2024 12:20:00'),
+  },
+  {
+    meetingId: 12,
+    text: 'Comment 1 for meeting 12',
+    authorId: 'u6',
+    createdDate: new Date('February 16, 2024 09:00:00'),
+  },
+  {
+    meetingId: 12,
+    text: 'Comment 2 for meeting 12',
+    authorId: 'u2',
+    createdDate: new Date('February 17, 2024 11:30:00'),
+  },
+  {
+    meetingId: 13,
+    text: 'Comment 1 for meeting 13',
+    authorId: 'u3',
+    createdDate: new Date('February 18, 2024 14:15:00'),
+  },
+  {
+    meetingId: 13,
+    text: 'Comment 2 for meeting 13',
+    authorId: 'u5',
+    createdDate: new Date('February 19, 2024 16:45:00'),
+  },
+  {
+    meetingId: 14,
+    text: 'Comment 1 for meeting 14',
+    authorId: 'u4',
+    createdDate: new Date('February 20, 2024 08:30:00'),
+  },
+  {
+    meetingId: 14,
+    text: 'Comment 2 for meeting 14',
+    authorId: 'u7',
+    createdDate: new Date('February 21, 2024 10:00:00'),
+  },
+  {
+    meetingId: 14,
+    text: 'Comment 3 for meeting 14',
+    authorId: 'u9',
+    createdDate: new Date('February 22, 2024 12:30:00'),
+  },
+  {
+    meetingId: 15,
+    text: 'Comment 1 for meeting 15',
+    authorId: 'u6',
+    createdDate: new Date('February 23, 2024 15:00:00'),
+  },
+  {
+    meetingId: 15,
+    text: 'Comment 2 for meeting 15',
+    authorId: 'u2',
+    createdDate: new Date('February 24, 2024 09:30:00'),
+  },
+];
+
+const initializeDatabase = async <T>(
+  db: Datastore<T>,
+  data: T[],
+): Promise<void> => {
+  await db.insert(data);
 };
 
 export { initializeDatabase };

@@ -18,6 +18,12 @@ export class Formatter {
       time: Formatter.timeFormatter.format(date)
     }
   }
+
+  public parseNameToInitials(name: string) {
+    const [firstName, lastName] = name.split(' ');
+    
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`
+  }
 }
 
 const formatter = new Formatter();

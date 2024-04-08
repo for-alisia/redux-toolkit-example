@@ -7,6 +7,9 @@ export type Meeting = {
   availableSeats: number;
   city: string;
   level: string;
+  attendies: string[];
 }
 
 export type MeetingDTO = Omit<Meeting, 'time'>;
+
+export type MetingDetailed = Meeting & { status: string };

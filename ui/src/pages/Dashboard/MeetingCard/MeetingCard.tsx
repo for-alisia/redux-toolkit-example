@@ -14,6 +14,7 @@ const { Meta } = Card;
 
 type MeetingCardProps = Meeting & {
   onBookSeat: () => void;
+  onShowDetails: () => void;
   isBookActionDisabled: boolean;
   isUpdatingMeeting: boolean;
 }
@@ -27,6 +28,7 @@ const MeetingCard: React.FC<MeetingCardProps> = ({
   city,
   level,
   onBookSeat,
+  onShowDetails,
   isBookActionDisabled,
   isUpdatingMeeting,
 }) => ( 
@@ -54,7 +56,9 @@ const MeetingCard: React.FC<MeetingCardProps> = ({
           onClick={onBookSeat}
           loading={isUpdatingMeeting}
         >Book</Button>,
-        <Button type="link" size="small" icon={<InfoCircleOutlined />}>Details</Button>,
+        <Button type="link" size="small" icon={<InfoCircleOutlined />} onClick={onShowDetails}>
+          Details
+        </Button>,
       ]}
     >
       <p>

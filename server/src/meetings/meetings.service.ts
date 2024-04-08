@@ -11,36 +11,24 @@ export class MeetingsService {
   constructor(private readonly neDbService: NeDbService) {}
 
   async findAll(): Promise<MeetingDTO[]> {
-    const dbMeetings = await this.neDbService.getDb().find<Meeting>({});
-
-    return dbMeetings.map(this.prepareMeetingDTO);
+    const meetingsDb = this.neDbService.getMeetingsDb();
+    return (await meetingsDb.find({})).map(this.prepareMeetingDTO);
   }
 
-  async findOne(id: number): Promise<Meeting> {
-    return this.neDbService.getDb().findOne<Meeting>({ id });
-  }
+  async findOne(meetingId: number): Promise<Meeting> {
+    const meetingsDb = this.neDbService.getMeetingsDb();
+    const meeting = await meetingsDb.findOne({ id: meetingId });
 
-  async create(meeting: Meeting): Promise<Meeting> {
-    return this.neDbService.getDb().insert<Meeting>(meeting);
-  }
+    if (!meeting) {
+      throw new NotFoundException(`Meeting with id ${meetingId} not found`);
+    }
 
-  async update(id: number, meeting: Meeting): Promise<Meeting> {
-    await this.neDbService.getDb().update({ id }, { $set: meeting }, {});
-    return this.findOne(id);
-  }
-
-  async remove(id: number): Promise<void> {
-    await this.neDbService.getDb().remove({ id }, { multi: false });
+    return meeting;
   }
 
   async updateAvailableSeats(id: number): Promise<MeetingDTO> {
-    const meeting: Meeting = await this.neDbService
-      .getDb()
-      .findOne<Meeting>({ id });
-
-    if (!meeting) {
-      throw new NotFoundException('Meeting not found');
-    }
+    const meeting: Meeting = await this.findOne(id);
+    const meetingsDb = this.neDbService.getMeetingsDb();
 
     if (meeting.availableSeats === 0) {
       throw new BadRequestException('No available seats');
@@ -48,10 +36,7 @@ export class MeetingsService {
 
     meeting.availableSeats -= 1;
 
-    const numAffected = await this.neDbService
-      .getDb()
-      .update({ id }, { $set: meeting }, {});
-
+    const numAffected = await meetingsDb.update({ id: id }, { $set: meeting });
     if (numAffected === 0) {
       return null;
     }
